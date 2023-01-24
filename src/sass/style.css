@@ -1,0 +1,104 @@
+/* @import "~bootstrap/scss/bootstrap"; */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,600;1,200&display=swap");
+@import 'bootstrap/dist/css/bootstrap.min.css';
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito";
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: #494949 !important;
+  background: linear-gradient(90deg, #345B63 0%, #D4ECDD 100%) !important;
+  background: -webkit-linear-gradient(90deg, #345B63 0%, #D4ECDD 100%) !important;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+}
+.search .searchIcon {
+  display: block;
+  width: 40px;
+  background: #345B63;
+  border: 1px solid #345B63;
+}
+.search input[type=text] {
+  position: relative;
+  background: #D4ECDD;
+  border-color: #345B63;
+}
+.search svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  color: #D4ECDD;
+  transform: translate(100%, -50%);
+}
+
+.listGroup {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem, 0rem;
+}
+.listGroup .list-group-item {
+  background: none;
+  border: 0;
+}
+.listGroup .navLink {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  cursor: pointer;
+  border-radius: 50%;
+  align-items: center;
+  transform: scale(0.8);
+  text-decoration: none;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(35deg, #494949, #313131);
+}
+.listGroup .navLink h4 {
+  color: #D4ECDD;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+.listGroup .navLink svg {
+  color: #D4ECDD;
+  font-size: 1.5rem;
+}
+.listGroup .navLink.active {
+  background: #345B63;
+}
+
+@media screen and (max-width: 770px) {
+  .listGroup .list-group-item {
+    padding: 0;
+  }
+  .listGroup .navLink {
+    width: 3.2rem;
+    height: 3.2rem;
+    transform: scale(0.9);
+  }
+  .listGroup .navLink h4 {
+    display: none;
+  }
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 2rem;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-gap: 2rem;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,56 @@
+.listGroup {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem, 0rem;
+
+    .list-group-item {
+        background: none;
+        border: 0;
+    }
+    
+    .navLink {
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        cursor: pointer;
+        border-radius: 50%;
+        align-items: center;
+        transform: scale(0.8);
+        text-decoration: none;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(35deg, $color_02, $color_03);
+
+        h4 {
+            color: $bgColor;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        svg {
+            color: $bgColor;
+            font-size: 1.5rem;
+        }
+        
+        &.active {
+            background: $color_01;
+        }
+    
+    }
+}
+@media screen and (max-width: 770px) {
+    .listGroup {
+        .list-group-item {
+            padding: 0;
+        }
+        .navLink {
+            width: 3.2rem;
+            height: 3.2rem;
+            transform: scale(0.9);
+
+            h4 {
+                display: none;
+            }
+        }
+    }
+}

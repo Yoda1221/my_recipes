@@ -1,0 +1,5 @@
+export { default as Home }          from './Home'
+export { default as Notfound }      from './Notfound'
+export { default as SpecFoods }     from './SpecFoods'
+export { default as NewRecipe }     from './NewRecipe'
+export { default as ShowRecipe }    from './ShowRecipe'
