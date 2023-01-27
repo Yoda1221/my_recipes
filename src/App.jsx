@@ -12,7 +12,7 @@ function App() {
         <Link to="/" >
           <img src={ logo } alt="logo" style={{ width: "40px"}} />
         </Link>
-        <Link to="/newrecipe/0" className="btn btn-sm btn-info">
+        <Link to="/newrecipe" className="btn btn-sm btn-info">
           New recipe
         </Link>
       </header>
@@ -20,8 +20,8 @@ function App() {
         <Route path="/" element={<Layout />} >
           <Route index element={<Home />} />
           <Route path="/specfood/:type" element={ <SpecFoods  /> } />
-          <Route path="/newrecipe/:id"      element={ <NewRecipe  /> } />
-          <Route path="/showrecipe/:id" element={ <ShowRecipe /> } />
+          <Route path="/newrecipe"      element={ <NewRecipe  /> } />
+          <Route path="/showrecipe"     element={ <ShowRecipe /> } />
           
           <Route path="*" element={<Notfound />} />
         </Route>

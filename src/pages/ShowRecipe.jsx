@@ -3,16 +3,18 @@ import { Loader }           from '../components'
 import { BiEditAlt }        from 'react-icons/bi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { Col, Container, Row }        from 'react-bootstrap'
-import { Link, useNavigate, useParams }  from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams }  from 'react-router-dom'
 import { useDeleteRecipeMutation } from '../api/apiSlice'
 import { TABLES, COMPLEX, ImgConfig, TEMP, TIME, TYPES }    from '../config'
 
 const ShowRecipe = () => {
-    const param         = useParams()
+    const location      = useLocation()
+    const navigate      = useNavigate()
+    const [ id, setId ] = useState(location.state?.id)
     const recipes       = JSON.parse(localStorage.getItem(TABLES.recipes))
-    const [recipe, setRecipe] = useState(null)
-    const [ deleteRecipe ]  = useDeleteRecipeMutation()
-    const navigate = useNavigate()
+    const [recipe, setRecipe]   = useState(null)
+    const [ deleteRecipe ]      = useDeleteRecipeMutation()
+    console.log("IDS ", location.state?.id)
 
     const searchRecipe = (id) => {
         const filtered = recipes.filter( recipe => {
@@ -27,8 +29,9 @@ const ShowRecipe = () => {
     }
 
     useEffect(() => {
-        searchRecipe(param.id)
-    }, [param.id])
+        setId(location.state?.id)
+        searchRecipe(location.state?.id)
+    }, [location.state?.id])
 
     return (
         <Container className='mt-3'>
@@ -73,7 +76,11 @@ const ShowRecipe = () => {
                     <Row>
                         <Col md={12}>
                             <div className="d-flex justify-content-between mt-3 p-3">
-                                <Link to={ recipe ? `/newrecipe/${recipe.id}` : ""} className="">
+                                <Link
+                                    state={{ id: recipe.id }} 
+                                    to={ recipe ? `/newrecipe` : ""} 
+                                    className=""
+                                >
                                     <BiEditAlt style={{ fontSize: "1.2rem"}}/>
                                 </Link >
                                 <RiDeleteBin6Line 

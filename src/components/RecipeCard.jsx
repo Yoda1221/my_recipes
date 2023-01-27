@@ -17,7 +17,11 @@ const RecipeCard = ({ item, ingredspec }) => {
             <Card.Body className='px-0 pb-0'>
                 <div className="px-2">
                     <Card.Title>{ item.name }</Card.Title>
-                        <Link to={`/showRecipe/${item.id}`} className="btn btn-sm btn-outline-warning w-100">
+                        <Link 
+                            state={{ id: item.id }} 
+                            to={`/showRecipe`} 
+                            className="btn btn-sm btn-outline-warning w-100"
+                        >
                         Show recipe
                     </Link>
                 </div>

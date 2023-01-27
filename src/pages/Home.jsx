@@ -1,15 +1,15 @@
-import { TABLES } from '../config'
-import { useState }  from 'react'
-import { Container, Form }              from 'react-bootstrap'
-import { Categories }       from '../containers'
-import { RecipeCard }       from '../components'
+import { useState }           from 'react'
+import { TABLES }             from '../config'
+import { Categories }         from '../containers'
+import { RecipeCard, SearchBar } from '../components'
+import { Container, Form }    from 'react-bootstrap'
 import { useGetRecipesQuery } from '../api/apiSlice'
 
 const Home = () => {
   let content
-  const [query, setQuery]           = useState("")
+  const [queries, setQueries] = useState([])
   const {
-    data: recipes,
+    data: jsonData,
     isLoading,
     isSuccess,
     isError,
@@ -20,27 +20,17 @@ const Home = () => {
   if (isSuccess)  content = <>
     {/* REFRESH LOCALSTOREGE WHEN SOMETHING IS CHANGED */}
     { localStorage.removeItem(TABLES.recipes) }
-    { localStorage.setItem(TABLES.recipes, JSON.stringify(recipes.respRecipe)) }
-    { recipes && recipes.respRecipe
-      .filter(recipe => recipe.name.toLowerCase().includes(query))
-      .map( item => {
-        return (
-          <RecipeCard key={ item.id } item={ item } />
-        )
+    { localStorage.setItem(TABLES.recipes, JSON.stringify(jsonData)) }
+    { queries && queries.map( item => {
+        return <RecipeCard key={ item.id } item={ item } />
       })
     }
   </>
   else if(isError) content = <p>{ error }</p>
-
   return (
     <Container className='p-3 mt-3'>
       <Container className=''>
-        <Form.Control
-          type="search"
-          className="me-2"
-          placeholder="Search"
-          onChange={(e) => setQuery(e.target.value.toLowerCase())}
-        />
+        <SearchBar jsonData={isSuccess ? jsonData.resp: [] } setQueries={setQueries} />
       </Container>
       <Categories />
       <Container className='p-3 mt-3 cardGrid'>

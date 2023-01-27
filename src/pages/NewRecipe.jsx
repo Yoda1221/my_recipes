@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { COMPLEX, ImgConfig, TABLES, TEMP, TIME, TYPES }  from '../config'
 import { Alert, Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import { useAddRecipeMutation, useUpdateRecipeMutation }  from '../api/apiSlice'
@@ -18,20 +18,20 @@ const initialState = {
 }
 
 const NewRecipe = () => {
-  const param         = useParams()
+  const location = useLocation()
+  console.log("IDN ", location.state?.id)  
   const navigate      = useNavigate()
+  const formData      = new FormData()
   const recipes       = JSON.parse(localStorage.getItem(TABLES.recipes))
+  const [ id, setId ]               = useState(location.state?.id != undefined ? location.state.id : null )
   const [ error, setError ]         = useState('')
   const [recipeData, setRecipeData] = useState(initialState)
   const [ rimage, setRimage ]       = useState(ImgConfig.uploadImage)
   const [ addRecipe ]     = useAddRecipeMutation()
   const [ updateRecipe ]  = useUpdateRecipeMutation()
 
-
-  const searchRecipe = (id) => {
-    const filtered = recipes.filter( recipe => {
-        return recipe.id == id 
-    })
+  const searchRecipe = () => {
+    const filtered = recipes.filter( recipe => { return recipe.id == id })
     initialState.name = filtered[0].name
     initialState.type = filtered[0].type
     initialState.difficulty     = filtered[0].difficulty
@@ -44,25 +44,25 @@ const NewRecipe = () => {
   }
 
   useEffect(() => {
-    if (param.id != 0) {
-      searchRecipe(param.id)
+    setId(location.state?.id)
+    if (location.state?.id != undefined) {
+      searchRecipe()
     } else {
       setRecipeData(initialState)
     }
-  }, [param.id])
+  }, [location.state?.id])
 
   const handleChange = (e) => {
-    console.log("RD ", recipeData)
     setRecipeData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
-    if (param.id != 0) {
-      setRecipeData((prevState) => ({ ...prevState, id: param.id }))
+    if (id != null) {
+      setRecipeData((prevState) => ({ ...prevState, id: id }))
     }
   }
   const canSave = [...Object.values(recipeData)].every(Boolean)
   const onFileDrop = (e) => {
     const newFile = e.target.files[0]
     if (newFile) {
-      setFile(newFile)
+      formData.append("file", newFile, newFile.name )
       setRimage(URL.createObjectURL(newFile))
     }
   }
@@ -70,7 +70,7 @@ const NewRecipe = () => {
     e.preventDefault()
     setError('')
     try {
-      const res = param.id == 0 ? addRecipe(recipeData) : updateRecipe(recipeData)
+      const res = id == null ? addRecipe(recipeData) : updateRecipe(recipeData)
       //const res = addRecipe(recipeData)
       console.log("RES ", res)
       setRecipeData(initialState)
@@ -165,13 +165,13 @@ const NewRecipe = () => {
                     onChange={handleChange}
                     required
                   >
-                    <option defaultValue=""> -- Válassz -- </option>
+                    <option > -- Válassz -- </option>
                     {
                       Object.keys(TEMP).map((key, index) => (
                         <option 
                           key={ index } 
                           value={ TEMP[key] }
-                          selected = { TEMP[key] == recipeData.temperature ? "selected" : "" }
+                          //selected = { recipeData.temperature && TEMP[key] == recipeData.temperature ? "selected" : "" }
                         >
                           { TEMP[key] } C°
                         </option>
@@ -180,7 +180,7 @@ const NewRecipe = () => {
                   </Form.Select>
                 </Form.Group>
               </Col>
-              <Col >
+              {/* <Col >
                 <Form.Group className="mb-3" controlId="recipeCompletionTime">
                   <Form.Label>Sütési idő (perc)</Form.Label>
                   <Form.Select 
@@ -204,9 +204,9 @@ const NewRecipe = () => {
                     }
                   </Form.Select>
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Row>
-            <Row>        
+            {/* <Row>        
               <Col >
                 <Form.Group className="mb-3" controlId="recipeDifficulty">
                   <Form.Label>Típus</Form.Label>
@@ -255,7 +255,7 @@ const NewRecipe = () => {
                   </Form.Select>
                 </Form.Group>
               </Col>
-            </Row>
+            </Row> */}
           </Card.Footer>
           <Row className='mb-5 px-3'>
             <Col>

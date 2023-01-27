@@ -19,7 +19,7 @@
         text-decoration: none;
         flex-direction: column;
         justify-content: center;
-        background: linear-gradient(35deg, $color_02, $color_03);
+        background: linear-gradient(35deg, $color_03, $color_04);
 
         h4 {
             color: $bgColor;
@@ -33,7 +33,7 @@
         }
         
         &.active {
-            background: $color_01;
+            background: $color_03;
         }
     
     }
