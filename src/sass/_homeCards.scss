@@ -3,3 +3,7 @@
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     grid-gap: 2rem;
 }
+.card {
+    background-color: $color_01;
+    border: 1px solid $color_03 !important;
+}

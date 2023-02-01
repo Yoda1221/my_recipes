@@ -22,7 +22,7 @@ const SpecFoods = () => {
     }, [param.type])
     
   return (
-    <>
+    <Container>
         <Categories />
         <Container className='my-5'>
             <div className='grid'>
@@ -31,7 +31,7 @@ const SpecFoods = () => {
                 ))}
             </div>
         </Container>
-    </>
+    </Container>
   )
 }
 

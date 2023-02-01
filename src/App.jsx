@@ -1,6 +1,6 @@
-import { Container } from "react-bootstrap"
-import { Layout } from "./containers"
-import { logo } from "./assets"
+import { Container }  from "react-bootstrap"
+import { Layout }     from "./containers"
+import { logo }       from "./assets"
 import { Routes, Route, Link }  from 'react-router-dom'
 import { Home, NewRecipe, Notfound, ShowRecipe, SpecFoods } from "./pages"
 

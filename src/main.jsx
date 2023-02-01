@@ -10,12 +10,12 @@ import './sass/style.scss'
 createRoot(document.getElementById('root'))
 .render(
   <React.StrictMode>
-    <ApiProvider api={ apiSlice } >
-      <BrowserRouter>
-          <Routes>
-            <Route path='/*' element={<App />} />
-          </Routes>
-      </BrowserRouter>
-    </ApiProvider>
+    <BrowserRouter>
+      <ApiProvider api={ apiSlice } >
+        <Routes>
+          <Route path='/*' element={<App />} />
+        </Routes>
+      </ApiProvider>
+    </BrowserRouter>
   </React.StrictMode>,
 )

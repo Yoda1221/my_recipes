@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState }      from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { COMPLEX, ImgConfig, TABLES, TEMP, TIME, TYPES }  from '../config'
 import { Alert, Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import { useAddRecipeMutation, useUpdateRecipeMutation }  from '../api/apiSlice'
+import { FormInputBS, FormTaBS } from '../components'
 
-import "./newRecipeStyle.scss"
-
-const initialState = {
+let initialState = {
   name: '', 
   type: '', 
   difficulty: '',
@@ -18,12 +17,12 @@ const initialState = {
 }
 
 const NewRecipe = () => {
-  const location = useLocation()
-  console.log("IDN ", location.state?.id)  
+  const location      = useLocation()  
   const navigate      = useNavigate()
   const formData      = new FormData()
   const recipes       = JSON.parse(localStorage.getItem(TABLES.recipes))
-  const [ id, setId ]               = useState(location.state?.id != undefined ? location.state.id : null )
+  const [ id, setId ] = useState(location.state?.id != undefined ? location.state.id : null )
+  console.log("🚀 → file: NewRecipe.jsx:24 → NewRecipe → id", id)
   const [ error, setError ]         = useState('')
   const [recipeData, setRecipeData] = useState(initialState)
   const [ rimage, setRimage ]       = useState(ImgConfig.uploadImage)
@@ -32,8 +31,8 @@ const NewRecipe = () => {
 
   const searchRecipe = () => {
     const filtered = recipes.filter( recipe => { return recipe.id == id })
-    initialState.name = filtered[0].name
-    initialState.type = filtered[0].type
+    initialState.name           = filtered[0].name
+    initialState.type           = filtered[0].type
     initialState.difficulty     = filtered[0].difficulty
     initialState.completion     = filtered[0].completion
     initialState.ingredients    = filtered[0].ingredients
@@ -42,21 +41,9 @@ const NewRecipe = () => {
     initialState.completionTime = filtered[0].completionTime
     setRecipeData(initialState)
   }
-
-  useEffect(() => {
-    setId(location.state?.id)
-    if (location.state?.id != undefined) {
-      searchRecipe()
-    } else {
-      setRecipeData(initialState)
-    }
-  }, [location.state?.id])
-
   const handleChange = (e) => {
     setRecipeData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
-    if (id != null) {
-      setRecipeData((prevState) => ({ ...prevState, id: id }))
-    }
+    if (id != null) setRecipeData((prevState) => ({ ...prevState, id: id }))
   }
   const canSave = [...Object.values(recipeData)].every(Boolean)
   const onFileDrop = (e) => {
@@ -81,6 +68,25 @@ const NewRecipe = () => {
     }
   }
 
+  useEffect(() => {
+    setId(location.state?.id)
+    initialState = {
+      name: '', 
+      type: '', 
+      difficulty: '',
+      completion: '', 
+      ingredients: '',
+      description: '', 
+      temperature: '',
+      completionTime: ''
+    }
+    if (location.state?.id != undefined) {
+      searchRecipe()
+    } else {
+      setRecipeData(initialState)
+    }
+  }, [location.state?.id])
+
   return (
     <>
     { error && <Alert variant='warning' className="text-center" >{ error }</Alert> }
@@ -104,60 +110,49 @@ const NewRecipe = () => {
             <input type="file" name="recipeImg" accept="image/*" onChange={ onFileDrop } />
           </div>
           <Card.Body>
-            <Form.Group className="mb-3" controlId="recipeName">
-              <Form.Label>Recept neve</Form.Label>
-              <Form.Control 
-                size="sm" 
-                type="text" 
-                name="name"
-                value={ recipeData.name }
-                placeholder="pl. Túrógombóc" 
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="recipeDescription">
-              <Form.Label>Recept leírása</Form.Label>
-              <Form.Control 
-                size="sm" 
-                as="textarea" rows={3} 
-                name="description"
-                defaultValue={ recipeData.description }
-                placeholder="Finom ebéd, vagy vacsora, vagy reggeli :)" 
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="recipeIngredients">
-              <Form.Label>Hozzávalók</Form.Label>
-              <Form.Control 
-                size="sm" 
-                as="textarea" rows={3} 
-                name="ingredients"
-                defaultValue={ recipeData.ingredients }
-                placeholder="Sorold fel mire van szükség ','-vel elválasztva" 
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="recipeCompletion">
-              <Form.Label>Elkészítés</Form.Label>
-              <Form.Control 
-                size="sm" 
-                as="textarea" rows={3} 
-                name="completion"
-                defaultValue={ recipeData.completion }
-                placeholder="Finom ebéd, vagy vacsora, vagy reggeli :)" 
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+            <FormInputBS 
+              size="sm" 
+              type="text" 
+              name="name" 
+              style="mb-3" 
+              labelName="Recept neve" 
+              placeholder="pl. Túrógombóc" 
+              value={recipeData.name} 
+              handleChange={handleChange} 
+            />
+            <FormTaBS 
+              size="sm"
+              name="description"
+              style="mb-3"
+              value={ recipeData.description }
+              labelName="Recept leírása"
+              placeholder="Finom ebéd, vagy vacsora, vagy reggeli :)"
+              handleChange={ handleChange }
+            />
+            <FormTaBS 
+              size="sm"
+              name="ingredients"
+              style="mb-3"
+              value={ recipeData.ingredients }
+              labelName="Hozzávalók"
+              placeholder="Sorold fel mire van szükség ','-vel elválasztva"
+              handleChange={ handleChange }
+            />
+            <FormTaBS 
+              size="sm"
+              name="completion"
+              style="mb-3"
+              value={ recipeData.completion }
+              labelName="Elkészítés"
+              placeholder="Írd ide, hgoy kell elkészíteni az ételt"
+              handleChange={ handleChange }
+            />
           </Card.Body>
           <Card.Footer className='mb-3'>
             <Row>
               <Col >
                 <Form.Group className="mb-3" controlId="recipeTemperature">
-                  <Form.Label>Sütési hőfok °C</Form.Label>
+                  <Form.Label>Sütési hőfok</Form.Label>
                   <Form.Select 
                     size='sm' 
                     name="temperature"
@@ -165,7 +160,7 @@ const NewRecipe = () => {
                     onChange={handleChange}
                     required
                   >
-                    <option > -- Válassz -- </option>
+                    <option defaultValue="" > -- Select one -- </option>
                     {
                       Object.keys(TEMP).map((key, index) => (
                         <option 
@@ -180,9 +175,9 @@ const NewRecipe = () => {
                   </Form.Select>
                 </Form.Group>
               </Col>
-              {/* <Col >
+              <Col >
                 <Form.Group className="mb-3" controlId="recipeCompletionTime">
-                  <Form.Label>Sütési idő (perc)</Form.Label>
+                  <Form.Label>Sütési idő</Form.Label>
                   <Form.Select 
                     size='sm' 
                     name="completionTime"
@@ -190,13 +185,13 @@ const NewRecipe = () => {
                     onChange={handleChange}
                     required
                   >
-                    <option defaultValue=""> -- Válassz -- </option>
+                    <option defaultValue=""> -- Select one -- </option>
                     {
                       Object.keys(TIME).map((key, index) => (
                         <option 
                           key={ index } 
                           value={ TIME[key] }
-                          selected = { TIME[key] == recipeData.completionTime ? "selected" : "" }
+                          /* selected = { TIME[key] == recipeData.completionTime ? "selected" : "" } */
                         >
                           { TIME[key] } perc
                         </option>
@@ -204,9 +199,9 @@ const NewRecipe = () => {
                     }
                   </Form.Select>
                 </Form.Group>
-              </Col> */}
+              </Col>
             </Row>
-            {/* <Row>        
+            <Row>        
               <Col >
                 <Form.Group className="mb-3" controlId="recipeDifficulty">
                   <Form.Label>Típus</Form.Label>
@@ -217,13 +212,13 @@ const NewRecipe = () => {
                     onChange={handleChange}
                     required
                   >
-                    <option defaultValue=""> -- Válassz -- </option>
+                    <option defaultValue=""> -- Select one -- </option>
                     {
                       Object.keys(TYPES).map((key, index) => (
                         <option 
                           key={ index } 
                           value={ TYPES[key].key }
-                          selected = { key == recipeData.type ? "selected" : "" }
+                          /* selected = { key == recipeData.type ? "selected" : "" } */
                         >
                           { TYPES[key].value }
                         </option>
@@ -242,20 +237,20 @@ const NewRecipe = () => {
                     onChange={handleChange}
                     required
                   >
-                    <option defaultValue=""> -- Válassz -- </option>
+                    <option defaultValue=""> -- Select one -- </option>
                     {
                       Object.keys(COMPLEX).map((key, index) => (
                         <option 
                           key={ index } 
                           value={ key }
-                          selected = { key == recipeData.difficulty ? "selected" : "" }
+                          /* selected = { key == recipeData.difficulty ? "selected" : "" } */
                         >{ COMPLEX[key] }</option>
                       ))
                     }
                   </Form.Select>
                 </Form.Group>
               </Col>
-            </Row> */}
+            </Row>
           </Card.Footer>
           <Row className='mb-5 px-3'>
             <Col>
@@ -269,7 +264,7 @@ const NewRecipe = () => {
               </Button>
             </Col>
             <Col>
-              <Button type="submit" size='sm' className='w-100' disabled={ !canSave }>Recept mentése</Button>
+              <Button type="submit" size='sm' className='w-100' disabled={ !canSave }>Recept { id != null ? "frissítése" : "mentése"} </Button>
             </Col>
           </Row>
         </Form>

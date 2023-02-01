@@ -25,10 +25,10 @@ const SearchBar = ({ jsonData, setQueries }) => {
 
     return (
         <Container className='px-3'>
-            <p className="fw-light pb-0">{ count } item found</p>
+            <p className="fw-light pb-0">{ count } recipe found</p>
             <Form.Control
                 type="search"
-                placeholder="Type the ask you are looking for"
+                placeholder="Type the recipe name you are looking for"
                 className="me-2"
                 onChange={searchChange}
                 onSubmit={(e) => e.preventDefault()}

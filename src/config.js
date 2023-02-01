@@ -1,5 +1,4 @@
-import noimage      from './img/noimage.jpg'
-import uploadImage  from './img/uploadImage.jpeg'
+import {noimage, uploadImage}      from './assets'
 
 const TABLES = Object.freeze({
     recipes: "recipes",
@@ -10,16 +9,16 @@ const TEMP = cookTemp()
 const TYPES = Object.freeze({
     s: {
         key: "s",
-        value: "leves"},    // soup leves
+        value: "soup"},    // soup leves
     m: {
         key: "m",    
-        value: "főétel"},   // main főétel
+        value: "main"},   // main főétel
     c: {
         key: "c",
         value: "desszert"}, // cake sütemény
     o: {
         key: "o",
-        value: "egyéb"}     // other egyéb
+        value: "other"}     // other egyéb
 })
 const COMPLEX = Object.freeze({
     e: "egyszerű",

@@ -1,9 +1,10 @@
 import { useState }           from 'react'
 import { TABLES }             from '../config'
 import { Categories }         from '../containers'
-import { RecipeCard, SearchBar } from '../components'
 import { Container, Form }    from 'react-bootstrap'
 import { useGetRecipesQuery } from '../api/apiSlice'
+import { RecipeCard, SearchBar } from '../components'
+import FileUploader           from '../utils/FileUploader'
 
 const Home = () => {
   let content
@@ -20,7 +21,7 @@ const Home = () => {
   if (isSuccess)  content = <>
     {/* REFRESH LOCALSTOREGE WHEN SOMETHING IS CHANGED */}
     { localStorage.removeItem(TABLES.recipes) }
-    { localStorage.setItem(TABLES.recipes, JSON.stringify(jsonData)) }
+    { localStorage.setItem(TABLES.recipes, JSON.stringify(jsonData.resp)) }
     { queries && queries.map( item => {
         return <RecipeCard key={ item.id } item={ item } />
       })
@@ -29,6 +30,7 @@ const Home = () => {
   else if(isError) content = <p>{ error }</p>
   return (
     <Container className='p-3 mt-3'>
+      <FileUploader />
       <Container className=''>
         <SearchBar jsonData={isSuccess ? jsonData.resp: [] } setQueries={setQueries} />
       </Container>
