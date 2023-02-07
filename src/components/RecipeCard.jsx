@@ -1,6 +1,7 @@
 import { COMPLEX, ImgConfig, TYPES, uppercaseFirstChar }    from '../config'
-import { Col, Card, Row, Accordion, ListGroup } from 'react-bootstrap'
+import { Col, Card, Row, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { MdOutlinePhotoCamera } from 'react-icons/Md'
 
 const RecipeCard = ({ item, ingredspec }) => {
     return (
@@ -11,9 +12,18 @@ const RecipeCard = ({ item, ingredspec }) => {
                     item.image != null ? import.meta.env.VITE_IMG_URL + item.image : ImgConfig.noimage
                 }
                 height= "250px"
-                style={{ ojectFit: "cover"}}
+                style={{ ojectFit: "cover", position: "relative"}}
                 alt={ item.name }
             />
+            { item.image == null 
+                ? <Link
+                        to={`/fileUploader`} 
+                        state={{ id: item.id }} 
+                    >
+                        <MdOutlinePhotoCamera style={{ fontSize: "30px", fontWeight: "lighter", color: "red", position: "absolute", right: "10px", top: "210px" }}/>
+                    </Link>
+                : "" 
+            }
             <Card.Body className='px-0 pb-0'>
                 <div className="px-2">
                     <Card.Title>{ item.name }</Card.Title>

@@ -15,11 +15,12 @@ const ImageUploader = () => {
             filepreview: URL.createObjectURL(event.target.files[0]),
         })
     }
-    const submit = async () =>{
+    const handleSubmit = async () =>{
         const formdata = new FormData()
+        formdata.append("ID", 2)
         formdata.append('avatar', userInfo.file)
-        axios.post("/imageupload", formdata,{ headers: { 
-            "Content-Type": "multipart/form-data" 
+        axios.post("/imageupload", formdata, { headers: { 
+            "Content-Type": "multipart/form-data"
         }})
         .then(res => {
             console.warn(res)
@@ -38,11 +39,11 @@ const ImageUploader = () => {
                         }
                         <header>Drag and Drop File to Upload</header>
                         <span>Or select a File</span>
-                        <input type="file"  name="upload_file" onChange={handleInputChange} />
+                        <input type="file" name="upload_file" onChange={handleInputChange} />
                     </div>
                 </Card.Body>
                 <Card.Footer >
-                    <button type="submit" className="btn btn-sm btn-outline-secondary my-3 mx-3 px-3" onClick={()=> submit() } >Upload</button>
+                    <button type="submit" className="btn btn-sm btn-outline-secondary my-3 mx-3 px-3" onClick={ handleSubmit } >Upload</button>
                     <div className='text-center'>
                         { isSucces !== null ? <h6 className='text-info'>{ isSucces }</h6> : "" }
                     </div>

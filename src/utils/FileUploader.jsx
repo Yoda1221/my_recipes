@@ -1,10 +1,13 @@
 import { useState }     from 'react'
 import { ImgConfig }    from '../config'
-import { useNavigate }  from "react-router-dom"
-import { Card, Container, Form } from 'react-bootstrap'
+import { useLocation, useNavigate }  from "react-router-dom"
+import { Card, Col, Container, Form, Row } from 'react-bootstrap'
 
 const FileUploader = () => {
+    const location  = useLocation()
     const navigate  = useNavigate()
+    const [ id, setId ] = useState(location.state?.id)
+    console.log("🚀 → file: FileUploader.jsx:10 → FileUploader → ID", id)
     const baseUrl   = import.meta.env.VITE_SERVER_URL
     const [ file, setFile ]     = useState()
     const [ rimage, setRimage ] = useState(ImgConfig.uploadImage)
@@ -19,8 +22,8 @@ const FileUploader = () => {
         e.preventDefault()
         if (!file) return
         const formData = new FormData()
+        formData.append("rId", id)
         formData.append("image", file, file.name)
-        formData.append("ID", 1)
         //  console.log("FDO ", Object.fromEntries(formData))
         try {
             const res   = await fetch(`${baseUrl}/image`, { method: 'POST',  body: formData })
@@ -42,7 +45,12 @@ const FileUploader = () => {
                         <span>Or select a File</span>
                         <input type="file" name="recipeImg" accept="image/*" onChange={ onFileDrop } />
                     </div>
-                    <button type="submit" className="btn btn-sm btn-info mt-3 mx-3 px-3" >Upload</button>
+                    <Row className='my-3'>
+                        <Col md={8} className='d-flex justify-content-center'>
+                            <input type="text" className="form-control px-3" id="newName" placeholder='Image new name' />
+                        </Col>
+                        <Col md={4} className='d-flex justify-content-center'><button type="submit" className="btn btn-sm btn-info px-3" >Upload</button></Col>
+                    </Row>
                 </Form>
                 <Card.Footer className='mb-3'>
                     <div>{file && `${file.name} - ${file.type}`}</div>

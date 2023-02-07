@@ -1,4 +1,4 @@
-import { FileUploader, ImageUploader } from "./utils"
+import { FileUploader } from "./utils"
 import { logo }         from "./assets"
 import { Layout }       from "./containers"
 import { Container }    from "react-bootstrap"
@@ -17,15 +17,13 @@ function App() {
           New recipe
         </Link>
       </header>
-      <ImageUploader />
       <Routes>
         <Route path="/" element={<Layout />} >
           <Route index element={<Home />} />
           <Route path="/specfood/:type"   element={ <SpecFoods  /> } />
           <Route path="/newrecipe"        element={ <NewRecipe  /> } />
           <Route path="/showrecipe"       element={ <ShowRecipe /> } />
-          <Route path="/fileUploader/:id" element={ <FileUploader /> } />
-          <Route path="/mageUploader" element={ <ImageUploader /> } />
+          <Route path="/fileUploader"     element={ <FileUploader /> } />
           
           <Route path="*" element={<Notfound />} />
         </Route>
