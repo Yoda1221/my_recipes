@@ -1,10 +1,9 @@
-import { useState }           from 'react'
-import { TABLES }             from '../config'
-import { Categories }         from '../containers'
-import { Container, Form }    from 'react-bootstrap'
-import { useGetRecipesQuery } from '../api/apiSlice'
-import { RecipeCard, SearchBar } from '../components'
-import FileUploader           from '../utils/FileUploader'
+import { useState }               from 'react'
+import { TABLES }                 from '../config'
+import { Categories }             from '../containers'
+import { Container, Form }        from 'react-bootstrap'
+import { useGetRecipesQuery }     from '../api/apiSlice'
+import { RecipeCard, SearchBar }  from '../components'
 
 const Home = () => {
   let content
@@ -30,7 +29,6 @@ const Home = () => {
   else if(isError) content = <p>{ error }</p>
   return (
     <Container className='p-3 mt-3'>
-      <FileUploader />
       <Container className=''>
         <SearchBar jsonData={isSuccess ? jsonData.resp: [] } setQueries={setQueries} />
       </Container>

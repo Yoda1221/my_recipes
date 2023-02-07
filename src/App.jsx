@@ -1,6 +1,7 @@
-import { Container }  from "react-bootstrap"
-import { Layout }     from "./containers"
-import { logo }       from "./assets"
+import { FileUploader, ImageUploader } from "./utils"
+import { logo }         from "./assets"
+import { Layout }       from "./containers"
+import { Container }    from "react-bootstrap"
 import { Routes, Route, Link }  from 'react-router-dom'
 import { Home, NewRecipe, Notfound, ShowRecipe, SpecFoods } from "./pages"
 
@@ -12,16 +13,19 @@ function App() {
         <Link to="/" >
           <img src={ logo } alt="logo" style={{ width: "40px"}} />
         </Link>
-        <Link to="/newrecipe" className="btn btn-sm btn-info">
+        <Link to="/newrecipe" className="btn btn-sm btn-outline-info rounded-pill">
           New recipe
         </Link>
       </header>
+      <ImageUploader />
       <Routes>
         <Route path="/" element={<Layout />} >
           <Route index element={<Home />} />
-          <Route path="/specfood/:type" element={ <SpecFoods  /> } />
-          <Route path="/newrecipe"      element={ <NewRecipe  /> } />
-          <Route path="/showrecipe"     element={ <ShowRecipe /> } />
+          <Route path="/specfood/:type"   element={ <SpecFoods  /> } />
+          <Route path="/newrecipe"        element={ <NewRecipe  /> } />
+          <Route path="/showrecipe"       element={ <ShowRecipe /> } />
+          <Route path="/fileUploader/:id" element={ <FileUploader /> } />
+          <Route path="/mageUploader" element={ <ImageUploader /> } />
           
           <Route path="*" element={<Notfound />} />
         </Route>

@@ -34,7 +34,7 @@ const ShowRecipe = () => {
     }, [location.state?.id])
 
     return (
-        <Container className='mt-3'>
+        <Container className='mt-3' style={{ maxWidth: "900px"}}>
             { recipe ? 
                 <Container>
                     <h2>{ recipe.name}</h2>
