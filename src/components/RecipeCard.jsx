@@ -20,7 +20,10 @@ const RecipeCard = ({ item, ingredspec }) => {
                         to={`/fileUploader`} 
                         state={{ id: item.id }} 
                     >
-                        <MdOutlinePhotoCamera style={{ fontSize: "30px", fontWeight: "lighter", color: "red", position: "absolute", right: "10px", top: "210px" }}/>
+                        <MdOutlinePhotoCamera 
+                            className='text-white bg-success rounded-circle p-2'
+                            style={{ fontSize: "30px", fontWeight: "lighter", width: "40px", height: "40px", position: "absolute", right: "10px", top: "200px" }}
+                        />
                     </Link>
                 : "" 
             }

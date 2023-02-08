@@ -64,7 +64,7 @@ const ShowRecipe = () => {
                         </Col>
                         <Col md={4} className="mb-3">
                             <ListGroup className='mb-3'>
-                                {  recipe.ingredients.split(';')
+                                {  recipe.ingredients.split(';') //!
                                     .map( (item, index)  => {
                                         return <ListGroup.Item className='text-muted text-end' key={ index }>{ item }</ListGroup.Item>
                                     })
