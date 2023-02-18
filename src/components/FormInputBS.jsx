@@ -9,7 +9,8 @@ const FormInputBS = ({
     value,
     labelName,
     placeholder,
-    handleChange
+    handleChange,
+    autoComplete="off"
   }) => {
   return (
     <Form.Group className={ style } controlId={ name } >
@@ -19,6 +20,7 @@ const FormInputBS = ({
         type={ type } 
         name={ name }
         value={ value }
+        autoComplete={ autoComplete }
         placeholder={ placeholder } 
         onChange={ handleChange }
         required

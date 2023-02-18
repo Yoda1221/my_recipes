@@ -6,6 +6,13 @@ const TABLES = Object.freeze({
 })
 const TIME = cookTime()
 const TEMP = cookTemp()
+const COUNTRIES = Object.freeze({
+    HU: "Magyarország",
+    AT: "Ausztria",
+    DE: "Deucheland",
+    CH: "Svájc",
+    US: "Amerika",
+})
 const TYPES = Object.freeze({
     s: {
         key: "s",
@@ -53,7 +60,7 @@ const ImgConfig = {
 }
 const USER_REGEX    = /^[A-z0-9]{3,20}$/
 const INPUT_REGEX   = /^[A-z0-9]{3,20}$/
-const PASSWD_REGEX  = /^[A-z0-9!@#$%]{4,12}$/
+const PASSWD_REGEX  = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/ ///^[A-z0-9!@#$%]{4,12}$/
 const EMAIL_REGEX   = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 export { 
@@ -62,6 +69,7 @@ export {
     TEMP,
     TYPES, 
     COMPLEX, 
+    COUNTRIES,
     ImgConfig, 
     USER_REGEX ,
     INPUT_REGEX,
