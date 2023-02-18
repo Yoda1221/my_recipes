@@ -6,6 +6,10 @@ const TABLES = Object.freeze({
 })
 const TIME = cookTime()
 const TEMP = cookTemp()
+const ROLES = {
+    'User': 0,
+    'Admin': 1
+}
 const COUNTRIES = Object.freeze({
     HU: "Magyarország",
     AT: "Ausztria",
@@ -69,6 +73,7 @@ export {
     TEMP,
     TYPES, 
     COMPLEX, 
+    ROLES,
     COUNTRIES,
     ImgConfig, 
     USER_REGEX ,

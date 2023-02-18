@@ -7,3 +7,4 @@ export { default as ShowRecipe }    from './ShowRecipe'
 /* AUTH */
 export { default as Login }         from './auth/Login'
 export { default as Register }      from './auth/Register'
+export { default as Unauthorized }  from './auth/Unauthorized'

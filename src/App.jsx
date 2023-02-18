@@ -1,9 +1,11 @@
 import { FileUploader } from "./utils"
 import { logo }         from "./assets"
-import { Layout }       from "./containers"
+import { Layout }  from "./containers"
+import { RequireAuth } from "./components"
 import { Container }    from "react-bootstrap"
 import { Routes, Route, Link }  from 'react-router-dom'
-import { Home, Login, NewRecipe, Notfound, Register, ShowRecipe, SpecFoods } from "./pages"
+import { Home, Login, NewRecipe, Notfound, Register, ShowRecipe, SpecFoods, Unauthorized } from "./pages"
+import { ROLES } from "./config"
 
 function App() {
   return (
@@ -18,15 +20,22 @@ function App() {
       </header>
       <Routes>
         <Route path="/" element={<Layout />} >
-          <Route index element={<Login />} />
+          {/* PUBLIC PAGES */}
+          <Route index element={<Home />} />
           <Route path="/specfood/:type"   element={ <SpecFoods  /> } />
-          <Route path="/newrecipe"        element={ <NewRecipe  /> } />
           <Route path="/showrecipe"       element={ <ShowRecipe /> } />
-          <Route path="/fileUploader"     element={ <FileUploader /> } />
           
           <Route path="/login"            element={ <Login /> } />
           <Route path="/register"         element={ <Register /> } />
+          <Route path="/unauthorized"     element={ <Unauthorized /> } />
+
+          {/* PROTECTED ROUTES */}
+          <Route element={ <RequireAuth allowedRoles={[ROLES.Admin]} /> } >
+            <Route path="/newrecipe"        element={ <NewRecipe  /> } />
+            <Route path="/fileUploader"     element={ <FileUploader /> } />
+          </Route>
           
+          {/* CATCH ALL */}
           <Route path="*" element={<Notfound />} />
         </Route>
       </Routes>

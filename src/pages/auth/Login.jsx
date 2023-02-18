@@ -1,9 +1,9 @@
 import axios    from '../../api/axios'
-//import useAuth  from '../../hooks/useAuth'
-import { useContext, useEffect, useState }  from "react"
+import useAuth  from '../../hooks/useAuth'
+import { useEffect, useState }  from "react"
 import { Link, useNavigate, useLocation }   from "react-router-dom"
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
-import AuthContext from '../../context/AuthProvider'
+//import AuthContext from '../../context/AuthProvider'
 //import useLocalStorage from '../../hooks/useLocalStorage'
 
 const LOGINURL = '/login';
@@ -13,10 +13,10 @@ const initialState = {
 }
 
 const Login = () => {
-  const {setAuth/* , persist, setPersist */} = useContext(AuthContext)
+  const {setAuth/* , persist, setPersist */} = useAuth()
   const navigate  = useNavigate()
   const location  = useLocation()
-  const from      = location.state?.from?.pathname || "/";
+  const from      = location.state?.from?.pathname || "/"
   const [error, setError]         = useState('')
   const [formDatas, setFormDatas] = useState(initialState)
   //const [formDatas, setFormDatas] = useLocalStorage('loginData', initialState)
@@ -29,7 +29,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError('')
     console.log('FORMDATAS ', formDatas)
     try {
       const response = await axios.post(LOGINURL, 
@@ -39,10 +38,11 @@ const Login = () => {
         }
       )
       console.log('RE ', response)
-      //const accessToken = response?.data?.accessToken
-      //setAuth({email: formDatas.email, accessToken})
+      const role        = response?.data?.role
+      const accessToken = response?.data?.accessToken
+      setAuth({email: formDatas.email, role, accessToken})
       setFormDatas(initialState)
-      //navigate(from, { replace: true })
+      navigate(from, { replace: true })
     } catch (error) {
       console.log("🚀 ~ file: Login.jsx ~ line 58 ~ handleSubmit ~ ERROR", error)
       if (!error?.response) setError('NO SERVER RESPONSE')
