@@ -19,13 +19,13 @@ let initialState = {
 const NewRecipe = () => {
   const location      = useLocation()  
   const navigate      = useNavigate()
-  const formData      = new FormData()
+  // const formData      = new FormData()
   const recipes       = JSON.parse(localStorage.getItem(TABLES.recipes))
   const [ id, setId ] = useState(location.state?.id != undefined ? location.state.id : null )
   console.log("🚀 → file: NewRecipe.jsx:24 → NewRecipe → id", id)
   const [ error, setError ]         = useState('')
   const [recipeData, setRecipeData] = useState(initialState)
-  const [ rimage, setRimage ]       = useState(ImgConfig.uploadImage)
+  // const [ rimage, setRimage ]       = useState(ImgConfig.uploadImage)
   const [ addRecipe ]     = useAddRecipeMutation()
   const [ updateRecipe ]  = useUpdateRecipeMutation()
 
@@ -44,15 +44,16 @@ const NewRecipe = () => {
   const handleChange = (e) => {
     setRecipeData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
     if (id != null) setRecipeData((prevState) => ({ ...prevState, id: id }))
+    console.log("RD ", recipeData)
   }
   const canSave = [...Object.values(recipeData)].every(Boolean)
-  const onFileDrop = (e) => {
+  /* const onFileDrop = (e) => {
     const newFile = e.target.files[0]
     if (newFile) {
       formData.append("file", newFile, newFile.name )
       setRimage(URL.createObjectURL(newFile))
     }
-  }
+  } */
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -93,7 +94,7 @@ const NewRecipe = () => {
     <Container className="d-flex justify-content-center mt-5">
       <Card className='my-3' style={{ minHeight: '300px', width: "350px", borderRadius: '20px', overflow: 'hidden' }}>
         <Form onSubmit={ handleSubmit } >
-          <div 
+{/*           <div 
             id="dndArea"
             className="dndArea"
           >
@@ -103,12 +104,12 @@ const NewRecipe = () => {
               height= "250px"
               name="recipeImg"
               /* style={{ ojectFit: "cover"}}
-              alt="No Image" */
+              alt="No Image" * /
             />
             <header>Drag Or Drop File to Upload</header>
             <span>Or select a File</span>
             <input type="file" name="recipeImg" accept="image/*" onChange={ onFileDrop } />
-          </div>
+          </div> */}
           <Card.Body>
             <FormInputBS 
               size="sm" 

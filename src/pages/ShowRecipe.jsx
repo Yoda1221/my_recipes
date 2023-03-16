@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Loader }           from '../components'
 import { BiEditAlt }        from 'react-icons/bi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { Card, Col, Container, ListGroup, Row }        from 'react-bootstrap'
-import { Link, useLocation, useNavigate }  from 'react-router-dom'
+import { Link, useLocation, useNavigate }   from 'react-router-dom'
 import { useDeleteRecipeMutation } from '../api/apiSlice'
-import { TABLES, COMPLEX, ImgConfig, TEMP, TIME, TYPES }    from '../config'
+import { TABLES, COMPLEX, ImgConfig, TYPES }    from '../config'
+import { Card, Col, Container, ListGroup, Row } from 'react-bootstrap'
 
 const ShowRecipe = () => {
     const location      = useLocation()
@@ -23,7 +23,7 @@ const ShowRecipe = () => {
     }
 
     const handleDeleteRecipe = (id) => {
-        //deleteRecipe({id})
+        deleteRecipe({id})
         //! REFRESH LOCALSTORAGE!!!
         navigate("/")
     }
@@ -64,7 +64,7 @@ const ShowRecipe = () => {
                         </Col>
                         <Col md={4} className="mb-3">
                             <ListGroup className='mb-3'>
-                                {  recipe.ingredients.split(';')
+                                {recipe.ingredients && recipe.ingredients.split(';')
                                     .map( (item, index)  => {
                                         return <ListGroup.Item className='text-muted text-end' key={ index }>{ item }</ListGroup.Item>
                                     })

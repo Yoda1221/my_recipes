@@ -61,7 +61,7 @@ const Login = () => {
   }, [formDatas])
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5" style={{ width: "350px"}} >
       { error && <Alert variant='warning' className="text-center" >{ error }</Alert> }
       <Form onSubmit={ handleSubmit }>
         <h2>Login page</h2>

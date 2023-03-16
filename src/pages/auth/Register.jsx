@@ -62,7 +62,7 @@ const Register = () => {
     
 
     return (
-        <Container className="m-5">
+        <Container className="mt-5" style={{ width: "500px"}} >
         { error && <Alert variant='warning' className="text-center" >{ error }</Alert> }
         <Form onSubmit={ handleSubmit }>
             <h2>Registration page</h2>
@@ -80,7 +80,7 @@ const Register = () => {
                 </Col>
                 <Col md={4}>
                     <Form.Group className="mb-3" controlId="recipeTemperature">
-                        <Form.Label>Melyik országban élsz?</Form.Label>
+                        <Form.Label>Country</Form.Label>
                         <Form.Select 
                             size='sm' 
                             name="country"
